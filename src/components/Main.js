@@ -1,5 +1,4 @@
 require('normalize.css/normalize.css');
-require('styles/App.css');
 require('styles/App.styl');
 
 import React from 'react';
@@ -14,20 +13,42 @@ imageDatas = (function (imageDatasArr) {
 		item.imageUrl = require(`../images/${item.fileName}`);
 		return item;
 	})
-})(imageDatas)
+})(imageDatas);
 
-class AppComponent extends React.Component {
-  render() {
-    return (
-      <section className="stage">
-         <section className="img-sec">
-         </section>
-         <nav className="controller-nav">
-         </nav>
-      </section>
+let ImgFigures = React.createClass({
+   render() {
+    return(
+      <figure className="img-figure">
+          <img src={this.props.data.imageUrl} alt={this.props.data.title}/>
+          <figcaption>
+              <h2 className="img-title">{this.props.data.title}</h2>
+          </figcaption>
+      </figure>
     );
+   }
+});
+
+let AppComponent = React.createClass({
+   render() {
+    let controllerUnits = [];
+    let imgFigures = [];
+
+   imageDatas.forEach(function(value) {
+    imgFigures.push(<imgFigures data={value}/>);
+   });
+
+   return(
+     <section className="stage">
+        <section className="img-sec">
+           {imgFigures}
+        </section>
+        <nav className="controller-nav">
+           {controllerUnits}
+        </nav>
+     </section>
+   );
   }
-}
+});
 
 AppComponent.defaultProps = {};
 
